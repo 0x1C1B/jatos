@@ -19,7 +19,8 @@ LDFLAGS := -melf_$(ARCH) -T arch/$(ARCH)/link.ld
 
 LIBS := \
 	libc/libc.a \
-	arch/$(ARCH)/libarch.a
+	arch/$(ARCH)/libarch.a \
+	platform/$(PLATFORM)/libplatform.a
 
 all: $(TARGET)
 
@@ -35,6 +36,7 @@ clean:
 
 	$(MAKE) -C libc clean
 	$(MAKE) -C arch/$(ARCH) clean
+	$(MAKE) -C platform/$(PLATFORM) clean
 
 	rm -f $(TARGET)
 	rm -f $(IMAGE)
@@ -47,3 +49,4 @@ $(LIBS):
 
 	$(MAKE) -C libc all
 	$(MAKE) -C arch/$(ARCH) all
+	$(MAKE) -C platform/$(PLATFORM) all
