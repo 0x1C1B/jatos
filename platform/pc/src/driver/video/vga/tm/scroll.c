@@ -27,14 +27,20 @@
 
 static uint16_t *video_memory = (uint16_t *) VGA_VIDEO_MEMORY;
 
-void vga_tm_scroll(size_t rows) {
+int32_t vga_tm_scroll(size_t rows) {
+
+    if(VGA_TM_ROWS <= rows) {
+		return VGA_TM_FAILURE;
+	}
 
     uint8_t attribute = ((VGA_TM_BLACK & 0x0F) << 4) | (VGA_TM_WHITE & 0x0F);
 	uint16_t value = 0x20 | (attribute << 8);
 
     size_t cells = (VGA_TM_ROWS - rows) * VGA_TM_COLUMNS;
-    uint16_t offset = video_memory + rows * VGA_TM_COLUMNS;
+    void *offset = video_memory + rows * VGA_TM_COLUMNS;
 
     memcpy(video_memory, offset, cells * 2);
     memsetw(video_memory + cells, value, rows * VGA_TM_COLUMNS);
+
+    return VGA_TM_SUCCESS;
 }

@@ -25,11 +25,17 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-void vga_tm_cursor(size_t cell) {
+int32_t vga_tm_cursor(size_t cell) {
+
+	if(VGA_TM_CELLS <= cell) {
+		return VGA_TM_FAILURE;
+	}
 
     outb(VGA_CRTC_ADDRESS_REG, VGA_CURSOR_LOCATION_HIGH_REG);
 	outb(VGA_CRTC_DATA_REG, cell >> 8);
 
 	outb(VGA_CRTC_ADDRESS_REG, VGA_CURSOR_LOCATION_LOW_REG);
 	outb(VGA_CRTC_DATA_REG, cell & 0xFF);
+
+	return VGA_TM_SUCCESS;
 }

@@ -30,9 +30,13 @@
 #include <io/ports.h>
 #include <string.h>
 
+// Screen Specifications
+
 #define VGA_TM_ROWS     (25)
 #define VGA_TM_COLUMNS  (80)
 #define VGA_TM_CELLS    (VGA_TM_ROWS * VGA_TM_COLUMNS)
+
+// Textmode Colors
 
 #define VGA_TM_BLACK			0x00
 #define VGA_TM_BLUE             0x01
@@ -51,13 +55,18 @@
 #define VGA_TM_LIGHT_BROWN		0x0E
 #define VGA_TM_WHITE			0x0F
 
-void vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg);
+// Return Codes
+
+#define VGA_TM_SUCCESS  (0x00)
+#define VGA_TM_FAILURE  (-0x01)
+
+int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg);
 void vga_tm_clear();
 
-void vga_tm_scroll(size_t rows);
+int32_t vga_tm_scroll(size_t rows);
 
 void vga_tm_disable_cursor();
 void vga_tm_enable_cursor(uint8_t start, uint8_t end);
-void vga_tm_cursor(size_t cell);
+int32_t vga_tm_cursor(size_t cell);
 
 #endif // VGA_TM_H
