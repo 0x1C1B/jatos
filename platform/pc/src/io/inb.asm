@@ -5,6 +5,6 @@ global inb
 
 inb:
 
-    mov dx, [esp + 4]
-    in al, dx
+    mov dx, [esp + 4]   ; Set I/O port address
+    in al, dx           ; Read a byte from port into register
     ret

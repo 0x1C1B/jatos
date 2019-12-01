@@ -25,7 +25,7 @@
 
 #include <boot/multiboot.h>
 
-void kmain(multiboot_descriptor_t *mboot_ptr) {
+void kmain(multiboot_header_t *mboot_ptr) {
 
     while(1);
 }

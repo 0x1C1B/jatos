@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef STDINT_H
-#define STDINT_H
+#ifndef _LIBC_STDINT_H
+#define _LIBC_STDINT_H
 
 #define INT8_MIN       (-128)
 #define INT16_MIN      (-32767-1)
@@ -52,4 +52,4 @@ typedef unsigned int            uint32_t;
 typedef unsigned long long int  uint64_t;
 typedef uint64_t                size_t;
 
-#endif // STDINT_H
+#endif // _LIBC_STDINT_H

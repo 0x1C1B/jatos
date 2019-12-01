@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef STRING_H
-#define STRING_H
+#ifndef _LIBC_STRING_H
+#define _LIBC_STRING_H
 
 #include <stdint.h>
 
@@ -33,4 +33,4 @@ void *memsetw(void *s, uint16_t c, size_t n);
 void *memcpy(void *dst, const void *src, size_t n);
 int memcmp(const void *s1, const void *s2, size_t n);
 
-#endif // STRING_H
+#endif // _LIBC_STRING_H

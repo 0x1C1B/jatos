@@ -23,17 +23,15 @@
  *
  */
 
-#ifndef VGA_H
-#define VGA_H
+#ifndef _PC_VGA_H
+#define _PC_VGA_H
 
-// Video Memory
+// Memory base addresses for different VGA video modes
+#define VGA_GFX_VIDEO_MEMORY            (0xA0000)   // Graphics mode
+#define VGA_MONOCHROME_VIDEO_MEMORY     (0xB0000)   // Monochrome (uncolored) text mode
+#define VGA_TM_VIDEO_MEMORY             (0xB8000)   // Text mode
 
-#define VGA_VIDEO_RAM                   (0xA0000)
-#define VGA_MONOCHROME_VIDEO_MEMORY     (0xB0000)
-#define VGA_VIDEO_MEMORY                (0xB8000)
-
-// CRT Controller (CRTC)
-
+// CRT Controller (CRTC) ports
 #define VGA_CRTC_ADDRESS_REG     (0x3D4)
 #define VGA_CRTC_DATA_REG        (0x3D5)
 
@@ -63,8 +61,7 @@
 #define VGA_CRTC_MODE_CONTROL_REG           (0x17)
 #define VGA_LINE_COMPARE_REG                (0x18)
 
-// Graphics Controller (GC)
-
+// Graphics Controller (GC) ports
 #define VGA_GC_ADDRESS_REG     (0x3CE)
 #define VGA_GC_DATA_REG        (0x3CF)
 
@@ -78,8 +75,7 @@
 #define VGA_IGNORE_COLOR_REG            (0x07)
 #define VGA_BITMASK_REG                 (0x08)
 
-// Sequencer (SEQ)
-
+// Sequencer (SEQ) ports
 #define VGA_SEQ_ADDRESS_REG     (0x3C4)
 #define VGA_SEQ_DATA_REG        (0x3C5)
 
@@ -89,4 +85,4 @@
 #define VGA_CHARACTER_MAP_REG       (0x03)
 #define VGA_SEQ_MEMORY_MODE_REG     (0x04)
 
-#endif // VGA_H
+#endif // _PC_VGA_H

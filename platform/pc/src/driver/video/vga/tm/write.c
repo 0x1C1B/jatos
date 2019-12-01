@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-static uint16_t *video_memory = (uint16_t *) VGA_VIDEO_MEMORY;
+static uint16_t *video_memory = (uint16_t *) VGA_TM_VIDEO_MEMORY;
 
 int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg) {
 

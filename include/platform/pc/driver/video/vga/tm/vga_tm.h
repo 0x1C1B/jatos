@@ -23,39 +23,36 @@
  *
  */
 
-#ifndef VGA_TM_H
-#define VGA_TM_H
+#ifndef _PC_VGA_TM_H
+#define _PC_VGA_TM_H
 
 #include <driver/video/vga/vga.h>
 #include <io/ports.h>
 #include <string.h>
+#include <stdint.h>
 
-// Screen Specifications
-
+// Screen dimensions divided into cells organized in rows and columns
 #define VGA_TM_ROWS     (25)
 #define VGA_TM_COLUMNS  (80)
 #define VGA_TM_CELLS    (VGA_TM_ROWS * VGA_TM_COLUMNS)
 
-// Textmode Colors
-
-#define VGA_TM_BLACK			0x00
-#define VGA_TM_BLUE             0x01
-#define VGA_TM_GREEN			0x02
-#define VGA_TM_CYAN             0x03
-#define VGA_TM_RED				0x04
-#define VGA_TM_MAGENTA			0x05
-#define VGA_TM_BROWN			0x06
-#define VGA_TM_LIGHT_GREY		0x07
-#define VGA_TM_DARK_GREY		0x08
-#define VGA_TM_LIGHT_BLUE		0x09
-#define VGA_TM_DARK_GREEN		0x0A
-#define VGA_TM_LIGHT_CYAN		0x0B
-#define VGA_TM_LIGHT_RED		0x0C
-#define VGA_TM_LIGHT_MAGENTA	0x0D
-#define VGA_TM_LIGHT_BROWN		0x0E
-#define VGA_TM_WHITE			0x0F
-
-// Return Codes
+// Colors supported by VGA 16-Color text mode
+#define VGA_TM_BLACK			(0x00)
+#define VGA_TM_BLUE             (0x01)
+#define VGA_TM_GREEN			(0x02)
+#define VGA_TM_CYAN             (0x03)
+#define VGA_TM_RED				(0x04)
+#define VGA_TM_MAGENTA			(0x05)
+#define VGA_TM_BROWN			(0x06)
+#define VGA_TM_LIGHT_GREY		(0x07)
+#define VGA_TM_DARK_GREY		(0x08)
+#define VGA_TM_LIGHT_BLUE		(0x09)
+#define VGA_TM_DARK_GREEN		(0x0A)
+#define VGA_TM_LIGHT_CYAN		(0x0B)
+#define VGA_TM_LIGHT_RED		(0x0C)
+#define VGA_TM_LIGHT_MAGENTA	(0x0D)
+#define VGA_TM_LIGHT_BROWN		(0x0E)
+#define VGA_TM_WHITE			(0x0F)
 
 #define VGA_TM_SUCCESS  (0x00)
 #define VGA_TM_FAILURE  (-0x01)
@@ -69,4 +66,4 @@ void vga_tm_disable_cursor();
 void vga_tm_enable_cursor(uint8_t start, uint8_t end);
 int32_t vga_tm_cursor(size_t cell);
 
-#endif // VGA_TM_H
+#endif // _PC_VGA_TM_H

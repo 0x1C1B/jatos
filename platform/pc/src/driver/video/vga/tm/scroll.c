@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-static uint16_t *video_memory = (uint16_t *) VGA_VIDEO_MEMORY;
+static uint16_t *video_memory = (uint16_t *) VGA_TM_VIDEO_MEMORY;
 
 int32_t vga_tm_scroll(size_t rows) {
 

@@ -7,8 +7,6 @@ MBOOT_CHECKSUM      equ -(MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
 bits 32
 section .multiboot
 
-global kmultiboot
-
 kmultiboot:
 
 	dd  MBOOT_HEADER_MAGIC
@@ -19,14 +17,14 @@ bits 32
 section .text
 
 global kboot
-global kstack
 extern kmain
 
 kboot:
 
+	; Setup tentative stack
 	mov esp, kstack + KSTACK_SIZE
 
-	push ebx
+	push ebx	; Save multiboot header at stack
 
 	cli
 	call kmain

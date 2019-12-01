@@ -23,19 +23,25 @@
  *
  */
 
-#ifndef MULTIBOOT_H
-#define MULTIBOOT_H
+#ifndef _I386_MULTIBOOT_H
+#define _I386_MULTIBOOT_H
 
 #include <stdint.h>
 
-struct multiboot_descriptor {
+/*
+    GNU Grub multiboot specification (version 0.6.96) compliant header as interface between
+    boot loader and operating system.
+*/
+
+struct multiboot_header {
 
     uint32_t magic;
     uint32_t flags;
     uint32_t checksum;
 
-} __attribute__((packed));
+}
+__attribute__ ((packed));
 
-typedef struct multiboot_descriptor multiboot_descriptor_t;
+typedef struct multiboot_header multiboot_header_t;
 
-#endif // MULTIBOOT_H
+#endif // _I386_MULTIBOOT_H

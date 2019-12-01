@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef STDBOOL_H
-#define STDBOOL_H
+#ifndef _LIBC_STDBOOL_H
+#define _LIBC_STDBOOL_H
 
 #define true    0x01
 #define false   0x00
@@ -34,4 +34,4 @@
 
 typedef uint8_t bool;
 
-#endif // STDBOOL_H
+#endif // _LIBC_STDBOOL_H

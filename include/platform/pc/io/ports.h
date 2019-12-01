@@ -23,12 +23,13 @@
  *
  */
 
-#ifndef PORTS_H
-#define PORTS_H
+#ifndef _PC_PORTS_H
+#define _PC_PORTS_H
 
 #include <stdint.h>
 
+// Read/Write a single byte to/from I/O ports
 void outb(uint16_t port, uint8_t data);
 uint8_t inb(uint16_t port);
 
-#endif // PORTS_H
+#endif // _PC_PORTS_H
