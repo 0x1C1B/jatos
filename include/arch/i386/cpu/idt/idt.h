@@ -23,14 +23,41 @@
  *
  */
 
-#include <boot/multiboot.h>
-#include <cpu/gdt/gdt.h>
-#include <cpu/idt/idt.h>
+#ifndef _I386_IDT_H
+#define _I386_IDT_H
 
-void kmain(multiboot_header_t *mboot_ptr) {
+#include <stdint.h>
+#include <string.h>
 
-    gdt_init();
-    idt_init();
+/*
+    Descriptor for each used interrupt service routine. Protected mode
+    counterpart to the Real Mode Interrupt Vector Table (IVT).
+*/
 
-    while(1);
+struct idt_descriptor
+{
+    uint16_t base_low;      // The 16 lowest bits of the 32 bits address in the segment
+    uint16_t selector;      // Index of descriptor in table
+    uint8_t reserved;       // Reserved (unused)
+    uint8_t flags;          // Configuration flags (privileges, present, etc.)
+    uint16_t base_high;     // The 16 highest bits of the 32 bit address in the segment
 }
+__attribute__ ((packed));
+
+typedef struct idt_descriptor idt_descriptor_t;
+
+struct idt_table
+{
+	uint16_t limit;
+	uint32_t base;
+}
+__attribute__ ((packed));
+
+typedef struct idt_table idt_table_t;
+
+void idt_init();
+
+// Used internally for setting up handlers for IRQs and ISRs
+void idt_setup_descriptor(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags);
+
+#endif // _I386_IDT_H
