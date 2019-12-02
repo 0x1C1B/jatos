@@ -29,8 +29,7 @@
 #include <stdint.h>
 
 /*
-    Descriptor for each used segment.
-    Represents a single entry in the global descriptor table.
+    Defines base access privileges for certain parts of memory, called segments
 */
 
 struct gdt_descriptor
@@ -56,9 +55,9 @@ __attribute__ ((packed));
 typedef struct gdt_table gdt_table_t;
 
 /*
-    Specifies the position of the segment in the global descriptor table and
-    thus also indirectly the memory offset. The memory offset is calculated by
-    multiplying the segment index with the descriptor size.
+    Specifies the position of the segment related descriptor inside of the GDT.
+    Using this information it's also possible to calculate the descriptor's memory
+    offset inside of the table.
 */
 
 typedef enum {

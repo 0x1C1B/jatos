@@ -30,14 +30,14 @@
 #include <string.h>
 
 /*
-    Descriptor for each used interrupt service routine. Protected mode
-    counterpart to the Real Mode Interrupt Vector Table (IVT).
+    Descriptor shows processor which Interrupt Service Routine (ISR), in general which
+    interrupt handler, to call to handle either an exception or an software/hardware interrupt.
 */
 
 struct idt_descriptor
 {
     uint16_t base_low;      // The 16 lowest bits of the 32 bits address in the segment
-    uint16_t selector;      // Index of descriptor in table
+    uint16_t selector;      // 16 bit selector (index) must point to valid descriptor in GDT
     uint8_t reserved;       // Reserved (unused)
     uint8_t flags;          // Configuration flags (privileges, present, etc.)
     uint16_t base_high;     // The 16 highest bits of the 32 bit address in the segment
@@ -45,6 +45,10 @@ struct idt_descriptor
 __attribute__ ((packed));
 
 typedef struct idt_descriptor idt_descriptor_t;
+
+/*
+    IDT is the protected mode counterpart to the Real Mode Interrupt Vector Table (IVT).
+*/
 
 struct idt_table
 {
@@ -57,7 +61,7 @@ typedef struct idt_table idt_table_t;
 
 void idt_init();
 
-// Used internally for setting up handlers for IRQs and ISRs
-void idt_setup_descriptor(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags);
+// Used for registering further interrupts with corresponding handler
+void idt_set_descriptor(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags);
 
 #endif // _I386_IDT_H

@@ -40,7 +40,7 @@ void idt_init() {
     idt_install((uint32_t) &idt);
 }
 
-void idt_setup_descriptor(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags) {
+void idt_set_descriptor(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags) {
 
     descriptors[index].base_low = base & 0xFFFF;
     descriptors[index].base_high = (base >> 16) & 0xFFFF;

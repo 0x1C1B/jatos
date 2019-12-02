@@ -26,12 +26,10 @@
 #include <cpu/gdt/gdt.h>
 
 static gdt_table_t gdt;
-
-// Omitted user + tss descriptors for now
 static gdt_descriptor_t descriptors[3];
 
 extern void gdt_install(uint32_t gdt_ptr);
-static void gdt_setup_descriptor(gdt_selector_t selector, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity);
+static void gdt_set_descriptor(gdt_selector_t selector, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity);
 
 void gdt_init() {
 
@@ -39,19 +37,19 @@ void gdt_init() {
     gdt.base = (uint32_t) &descriptors;
 
     // NULL descriptor
-    gdt_setup_descriptor(NULL_DESCRIPTOR_INDEX, 0x00, 0x00, 0x00, 0x00);
+    gdt_set_descriptor(NULL_DESCRIPTOR_INDEX, 0x00, 0x00, 0x00, 0x00);
 
     // Kernel code descriptor
-    gdt_setup_descriptor(KERNEL_CODE_DESCRIPTOR_INDEX, 0x00, 0xFFFFFFFF, 0x9A, 0xCF);
+    gdt_set_descriptor(KERNEL_CODE_DESCRIPTOR_INDEX, 0x00, 0xFFFFFFFF, 0x9A, 0xCF);
 
     // Kernel data descriptor
-    gdt_setup_descriptor(KERNEL_DATA_DESCRIPTOR_INDEX, 0x00, 0xFFFFFFFF, 0x92, 0xCF);
+    gdt_set_descriptor(KERNEL_DATA_DESCRIPTOR_INDEX, 0x00, 0xFFFFFFFF, 0x92, 0xCF);
 
     // Flush GDT and switch to Protected Mode (PM)
     gdt_install((uint32_t) &gdt);
 }
 
-static void gdt_setup_descriptor(gdt_selector_t selector, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity) {
+static void gdt_set_descriptor(gdt_selector_t selector, uint32_t base, uint32_t limit, uint8_t access, uint8_t granularity) {
 
     // Setup fractional base address (segment's start address)
     descriptors[selector].base_low = (base & 0xFFFF);
