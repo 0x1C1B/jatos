@@ -23,17 +23,21 @@
  *
  */
 
-#ifndef _LIBC_STRING_H
-#define _LIBC_STRING_H
+#include <string.h>
 
-#include <stdint.h>
+char *strrev(char *str)
+{
+    size_t len = strlen(str);
 
-void *memset(void *s, uint8_t c, size_t n);
-void *memsetw(void *s, uint16_t c, size_t n);
-void *memcpy(void *dst, const void *src, size_t n);
-int memcmp(const void *s1, const void *s2, size_t n);
+    char *ptr1 = str;
+    char *ptr2 = str + (len - 1);
 
-size_t strlen(const char *str);
-char *strrev(char *str);
-
-#endif // _LIBC_STRING_H
+    while(ptr1 < ptr2)
+    {
+        char c = *ptr1;
+        *ptr1++ = *ptr2;
+        *ptr2-- = c;
+    }
+    
+    return str;
+}
