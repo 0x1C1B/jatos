@@ -38,6 +38,11 @@ char *itoa(uint32_t n, char *buf, uint32_t base)
         *ptr = '\0';
         return buf;
 
+    } else if(0 == n) {
+
+        *ptr++ = '0';
+        *ptr = '\0';
+        return buf;
     }
 
     while(0 != n)
