@@ -28,6 +28,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <cpu/interrupt/isr.h>
 
 /*
     Descriptor shows processor which Interrupt Service Routine (ISR), in general which

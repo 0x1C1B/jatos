@@ -23,30 +23,11 @@
  *
  */
 
-#include <cpu/idt/idt.h>
+#include <cpu/interrupt/isr.h>
 
-static idt_table_t idt;
-static idt_descriptor_t descriptors[256];
+isr_listener_t listeners[32];
 
-extern void idt_install(uint32_t gdt_ptr);
-
-void idt_init() {
-
-    idt.limit = (sizeof(descriptors) - 1);
-    idt.base = (uint32_t) &descriptors;
-
-    memset(&descriptors, 0x00, sizeof(descriptors));
-    isr_init();
-
-    idt_install((uint32_t) &idt);
-}
-
-void idt_set_descriptor(uint8_t index, uint32_t base, uint16_t selector, uint8_t flags) {
-
-    descriptors[index].base_low = base & 0xFFFF;
-    descriptors[index].base_high = (base >> 16) & 0xFFFF;
-
-    descriptors[index].selector = selector;
-    descriptors[index].reserved = 0x00;
-    descriptors[index].flags = flags;
+void isr_init() {
+	
+	memset(listeners, 0x00, sizeof(listeners));
 }
