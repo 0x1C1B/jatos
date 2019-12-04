@@ -23,17 +23,30 @@
  *
  */
 
-#ifndef _LIBC_STRING_H
-#define _LIBC_STRING_H
+#include <stdlib.h>
+#include <string.h>
 
-#include <stdint.h>
+static char chars[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
-void *memset(void *s, uint8_t c, size_t n);
-void *memsetw(void *s, uint16_t c, size_t n);
-void *memcpy(void *dst, const void *src, size_t n);
-int memcmp(const void *s1, const void *s2, size_t n);
+char *itoa(uint32_t n, char *buf, uint32_t base)
+{
+	char *ptr = buf;
 
-size_t strlen(const char *str);
-char *strrev(char *str);
+	// Numeral systems with a base higher than 16 aren't supported
+    if(base > 16) {
 
-#endif // _LIBC_STRING_H
+        *ptr = '\0';
+        return buf;
+
+    }
+
+    while(0 != n)
+    {
+        *ptr++ = chars[n % base];
+        n /= base;
+    }
+	
+	*ptr = '\0';
+	
+	return strrev(buf);
+}
