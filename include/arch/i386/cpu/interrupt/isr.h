@@ -111,6 +111,7 @@ isr_selector_t;
 void isr_init();
 void isr_handler(processor_state_t *state);
 
+void isr_install_default_listener(isr_listener_t listener);
 void isr_install_listener(isr_selector_t selector, isr_listener_t listener);
 void isr_uninstall_listener(isr_selector_t selector);
 

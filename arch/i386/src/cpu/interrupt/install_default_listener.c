@@ -27,11 +27,10 @@
 
 extern isr_listener_t listeners[48];
 
-void isr_handler(processor_state_t *state) {
+void isr_install_default_listener(isr_listener_t listener) {
 
-    if(48 > state->int_no && 0x00 != listeners[state->int_no])
-	{
-		isr_listener_t listener = listeners[state->int_no];
-		listener(state);
-	}
+    for(int index = 0; index < sizeof(listeners) / sizeof(isr_listener_t); ++index) {
+
+        listeners[index] = listener;
+    }
 }

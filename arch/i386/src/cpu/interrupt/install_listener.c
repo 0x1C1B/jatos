@@ -25,7 +25,7 @@
 
 #include <cpu/interrupt/isr.h>
 
-extern isr_listener_t listeners[32];
+extern isr_listener_t listeners[48];
 
 void isr_install_listener(isr_selector_t selector, isr_listener_t listener) {
 

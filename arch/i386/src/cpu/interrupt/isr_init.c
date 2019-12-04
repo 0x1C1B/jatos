@@ -25,7 +25,7 @@
 
 #include <cpu/interrupt/isr.h>
 
-isr_listener_t listeners[32];
+isr_listener_t listeners[48];
 
 void isr_init() {
 	
