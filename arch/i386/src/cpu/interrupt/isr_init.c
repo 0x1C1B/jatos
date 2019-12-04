@@ -24,10 +24,13 @@
  */
 
 #include <cpu/interrupt/isr.h>
+#include <cpu/interrupt/exc/exc.h>
 
 isr_listener_t listeners[48];
 
 void isr_init() {
 	
 	memset(listeners, 0x00, sizeof(listeners));
+
+	exc_init();
 }
