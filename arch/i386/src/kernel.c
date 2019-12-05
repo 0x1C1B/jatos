@@ -26,11 +26,76 @@
 #include <boot/multiboot.h>
 #include <cpu/gdt/gdt.h>
 #include <cpu/idt/idt.h>
+#include <cpu/interrupt/isr.h>
+
+#include <io/cli/cli.h>
+#include <stdlib.h>
+
+void kinterrupt_handler(processor_state_t *state);
 
 void kmain(multiboot_header_t *mboot_ptr) {
 
-    gdt_init();
-    idt_init();
+    gdt_init(); // Setup memory segmentation
+    idt_init(); // Support interrupt handling
+    cli_init(); // Enable command line interface
+
+    // Install a default interrupt handler
+    isr_install_default_listener(&kinterrupt_handler);
 
     while(1);
+}
+
+void kinterrupt_handler(processor_state_t *state) {
+
+    static const char *messages[] = {
+
+        "Division by zero",
+        "Debug",
+        "Non maskable interrupt",
+        "Breakpoint",
+        "Into detected overflow",
+        "Out of bounds",
+        "Invalid opcode",
+        "No coprocessor",
+        "Double fault",
+        "Coprocessor segment overrun",
+        "Bad TSS",
+        "Segment not present",
+        "Stack fault",
+        "General protection fault",
+        "Page fault",
+        "Unknown interrupt",
+        "Coprocessor fault"
+        "Alignment check",
+        "Machine check"
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception",
+        "Intel reserved exception"
+    };
+
+    // Handle exceptions only
+    if(32 > state->interrupt_code) {
+
+        char int_code[4];
+		
+        cli_color(CLI_RED, CLI_BLACK);
+
+        cli_print("Interrupt (Exception) ");
+        cli_print(itoa(state->interrupt_code, int_code, 10));
+        cli_print(": ");
+        cli_print(messages[state->interrupt_code]);
+        cli_putc('\n');
+
+        cli_color(CLI_WHITE, CLI_BLACK);
+    }
 }
