@@ -23,18 +23,17 @@
  *
  */
 
-#include <cpu/interrupt/isr.h>
+#ifndef _I386_PIC_H
+#define _I386_PIC_H
 
-extern isr_listener_t listeners[48];
+//Master PIC addresses
+#define PIC_MASTER_COMMAND_REG  0x20 // Command register
+#define PIC_MASTER_DATA_REG     0x21 // Data register
+ 
+//Slave PIC addresses
+#define PIC_SLAVE_COMMAND_REG   0xA0 // Command register
+#define PIC_SLAVE_DATA_REG      0xA1 // Data register
 
-void isr_handler(processor_state_t *state) {
+#define PIC_EOI 0x20    // End of Interrupt
 
-	size_t listeners_number = sizeof(listeners) / sizeof(isr_listener_t);
-
-	// Call registered listener for actual handling implementation
-    if(listeners_number > state->interrupt_code && 0x00 != listeners[state->interrupt_code]) {
-		
-		isr_listener_t listener = listeners[state->interrupt_code];
-		listener(state);
-	}
-}
+#endif // _I386_PIC_H
