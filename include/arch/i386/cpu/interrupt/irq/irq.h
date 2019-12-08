@@ -23,16 +23,32 @@
  *
  */
 
-#include <cpu/interrupt/isr.h>
-#include <cpu/interrupt/exc/exc.h>
-#include <cpu/interrupt/irq/irq.h>
+#ifndef _I386_IRQ_H
+#define _I386_IRQ_H
 
-isr_listener_t listeners[48];
+#include <io/ports.h>
+#include <cpu/interrupt/pic.h>
+#include <cpu/idt/idt.h>
+#include <stdint.h>
+#include <string.h>
 
-void isr_init() {
-	
-	memset(listeners, 0x00, sizeof(listeners));
+extern void isr32();
+extern void isr33();
+extern void isr34();
+extern void isr35();
+extern void isr36();
+extern void isr37();
+extern void isr38();
+extern void isr39();
+extern void isr40();
+extern void isr41();
+extern void isr42();
+extern void isr43();
+extern void isr44();
+extern void isr45();
+extern void isr46();
+extern void isr47();
 
-	exc_init();	// Initialize excpetion interrupts
-	irq_init();	// Initialize hardware (IRQ) interrupts
-}
+void irq_init();
+
+#endif // _I386_IRQ_H
