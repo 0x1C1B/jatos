@@ -13,6 +13,7 @@ TARGET := libplatform.a
 
 INCLUDE := \
 	-I '$(ROOTDIR)/include/libc' \
+	-I '$(ROOTDIR)/include/arch/$(ARCH)' \
 	-I '$(ROOTDIR)/include/platform/$(PLATFORM)'
 
 CFLAGS := -m32 -Wall -O -fno-stack-protector -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin
