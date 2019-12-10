@@ -2,8 +2,9 @@
 
 .PHONY: all clean
 
-ARCH ?= i386
-PLATFORM ?= pc
+ARCH ?= x86
+PLATFORM ?= intel
+FORMAT ?= elf_i386
 ROOTDIR := $(realpath .)
 
 export ARCH
@@ -15,7 +16,7 @@ ISODIR := iso
 TARGET := kernel.bin
 IMAGE := jatos-$(PLATFORM)-$(ARCH).iso
 
-LDFLAGS := -melf_$(ARCH) -T arch/$(ARCH)/link.ld
+LDFLAGS := -m $(FORMAT) -T arch/$(ARCH)/link.ld
 
 LIBS := \
 	libc/libc.a \
