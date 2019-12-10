@@ -25,21 +25,13 @@
 
 #include <io/cli/cli.h>
 
-cli_t cli;
+char cli_getc() {
 
-void cli_init() {
+    // Blocking input
+    while(0 == keyboard_available());
 
-    cli.rows = VGA_TM_ROWS;
-    cli.columns = VGA_TM_COLUMNS;
-
-    cli.cursor_x = 0;
-    cli.cursor_y = 0;
-
-    cli.fg = CLI_WHITE;
-    cli.bg = CLI_BLACK;
-
-    vga_tm_clear();
-    vga_tm_enable_cursor(0x00, 0x0F);
-
-    keyboard_init();
+    uint8_t key = keyboard_getc();
+    
+    cli_putc(key);
+    return key;
 }

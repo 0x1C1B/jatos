@@ -24,22 +24,34 @@
  */
 
 #include <io/cli/cli.h>
+#include <driver/keyboard/layout/layout.h>
 
-cli_t cli;
+void cli_scan(char *buf) {
 
-void cli_init() {
+    uint8_t key = 0x00;
+    char *ptr = buf;
 
-    cli.rows = VGA_TM_ROWS;
-    cli.columns = VGA_TM_COLUMNS;
+    do {
 
-    cli.cursor_x = 0;
-    cli.cursor_y = 0;
+        // Blocking input
+        while(0 == keyboard_available());
+        key = keyboard_getc();
 
-    cli.fg = CLI_WHITE;
-    cli.bg = CLI_BLACK;
+        if(KEY_BACKSPACE == key || ASCII_BACKSPACE == key) {   // Backspace
 
-    vga_tm_clear();
-    vga_tm_enable_cursor(0x00, 0x0F);
+            if(ptr - 1 >= buf) {    // Delete last inputted character
 
-    keyboard_init();
+                cli_delc();
+                *(--ptr) = '\0';
+            }
+
+        } else {
+
+            *ptr++ = (char) key;
+            cli_putc(key);
+        }
+
+    } while('\n' != key);
+
+    *ptr = '\0';    // End read string
 }

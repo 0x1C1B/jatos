@@ -27,6 +27,9 @@
 #define _PLATFORM_IO_CLI_H
 
 #include <driver/video/vga/tm/vga_tm.h>
+#include <driver/keyboard/keyboard.h>
+
+#include <ctype.h>
 
 // Colors supported by VGA 16-Color text mode
 #define CLI_BLACK           (0x00)
@@ -65,9 +68,13 @@ typedef struct cli {
 void cli_init();
 
 void cli_putc(char c);
-void cli_delc();
 void cli_print(const char *str);
+
+void cli_delc();
 void cli_clear();
 void cli_color(uint8_t fg, uint8_t bg);
+
+char cli_getc();
+void cli_scan(char *buf);
 
 #endif // _PLATFORM_IO_CLI_H
