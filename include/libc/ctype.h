@@ -26,6 +26,7 @@
 #ifndef _LIBC_CTYPE_H
 #define _LIBC_CTYPE_H
 
+#include <stdint.h>
 #include <stdbool.h>
 
 bool isprint(uint8_t c);

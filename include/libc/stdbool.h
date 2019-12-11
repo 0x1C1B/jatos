@@ -26,6 +26,8 @@
 #ifndef _LIBC_STDBOOL_H
 #define _LIBC_STDBOOL_H
 
+#include <stdint.h>
+
 #define true    0x01
 #define false   0x00
 
