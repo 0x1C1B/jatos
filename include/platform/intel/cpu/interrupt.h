@@ -23,17 +23,10 @@
  *
  */
 
-#include <cpu/cpu.h>
+#ifndef _PLATFORM_INTEL_INTERRUPT_H
+#define _PLATFORM_INTEL_INTERRUPT_H
 
-void cpu_init() {
+void int_enable();
+void int_disable();
 
-    gdt_init(); // Setup memory segmentation
-
-    int_disable();	// Disable interrupts temporary
-
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
-
-    int_enable();	// Enable interrupts again
-}
+#endif // _PLATFORM_INTEL_INTERRUPT_H

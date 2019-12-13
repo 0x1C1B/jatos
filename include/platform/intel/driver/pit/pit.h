@@ -23,17 +23,22 @@
  *
  */
 
-#include <cpu/cpu.h>
+#ifndef _PLATFORM_DRIVER_PIT_H
+#define _PLATFORM_DRIVER_PIT_H
 
-void cpu_init() {
+#include <io/ports.h>
+#include <cpu/isr/isr.h>
 
-    gdt_init(); // Setup memory segmentation
+#define PIT_COUNTER_0_REG   0x40
+#define PIT_COUNTER_1_REG   0x41
+#define PIT_COUNTER_2_REG   0x42
+#define PIT_COMMAND_REG     0x43
 
-    int_disable();	// Disable interrupts temporary
+#define PIT_OSCILLATOR_FREQUENCY    (1193180)   // 1.19MHz
+#define PIT_IRQ_SEC_HIT             (19)        // Timer fires 19 times per second
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+void pit_init();
+void pit_phase(uint8_t counter, uint32_t frequency);
+void pit_wait(size_t ticks);
 
-    int_enable();	// Enable interrupts again
-}
+#endif // _PLATFORM_DRIVER_PIT_H

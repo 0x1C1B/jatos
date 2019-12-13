@@ -23,17 +23,37 @@
  *
  */
 
-#include <cpu/cpu.h>
+#ifndef _PLATFORM_DRIVER_KEYBOARD_H
+#define _PLATFORM_DRIVER_KEYBOARD_H
 
-void cpu_init() {
+#include <io/ports.h>
+#include <cpu/isr/isr.h>
+#include <driver/ps2/keyboard/layout/layout.h>
 
-    gdt_init(); // Setup memory segmentation
+#include <stdint.h>
+#include <stdbool.h>
 
-    int_disable();	// Disable interrupts temporary
+#define KEYBOARD_CONTROL_REG    0x64
+#define KEYBOARD_DATA_REG       0x60
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+#define KEYBOARD_BUFFER_CAPACITY    256
 
-    int_enable();	// Enable interrupts again
-}
+typedef struct key_queue {
+
+	uint8_t *write_ptr;
+	uint8_t *read_ptr;
+	volatile size_t available;
+
+    uint8_t buffer[KEYBOARD_BUFFER_CAPACITY];
+
+} key_queue_t;
+
+void keyboard_init();
+uint8_t keyboard_getc();
+size_t keyboard_available();
+
+uint8_t keyboard_decode();
+uint32_t keyboard_enqueue(uint8_t key);
+uint32_t keyboard_dequeue(uint8_t * const key);
+
+#endif // _PLATFORM_DRIVER_KEYBOARD_H

@@ -23,17 +23,24 @@
  *
  */
 
-#include <cpu/cpu.h>
+#ifndef _PLATFORM_DRIVER_PIC_H
+#define _PLATFORM_DRIVER_PIC_H
 
-void cpu_init() {
+#include <io/ports.h>
+#include <stdint.h>
 
-    gdt_init(); // Setup memory segmentation
+//Master PIC (PIC1) addresses
+#define PIC_MASTER_COMMAND_REG  0x20 // Command register
+#define PIC_MASTER_DATA_REG     0x21 // Data register
+ 
+//Slave PIC (PIC2) addresses
+#define PIC_SLAVE_COMMAND_REG   0xA0 // Command register
+#define PIC_SLAVE_DATA_REG      0xA1 // Data register
 
-    int_disable();	// Disable interrupts temporary
+#define PIC_EOI 0x20    // End of Interrupt
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+void pic_enable_irq(uint8_t irq);
+void pic_disable_irq(uint8_t irq);
+void pic_remap_irq(uint8_t offset, uint8_t limit);
 
-    int_enable();	// Enable interrupts again
-}
+#endif // _PLATFORM_DRIVER_PIC_H

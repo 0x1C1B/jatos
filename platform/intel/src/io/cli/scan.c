@@ -24,7 +24,7 @@
  */
 
 #include <io/cli/cli.h>
-#include <driver/keyboard/layout/layout.h>
+#include <driver/ps2/keyboard/layout/layout.h>
 
 void cli_scan(char *buf) {
 

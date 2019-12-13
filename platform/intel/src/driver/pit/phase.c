@@ -23,17 +23,13 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/pit/pit.h>
 
-void cpu_init() {
+void pit_phase(uint8_t counter, uint32_t frequency) {
 
-    gdt_init(); // Setup memory segmentation
+    uint32_t divisor = PIT_OSCILLATOR_FREQUENCY / frequency;
 
-    int_disable();	// Disable interrupts temporary
-
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
-
-    int_enable();	// Enable interrupts again
+    outb(PIT_COMMAND_REG, 0x36);
+    outb(counter, divisor & 0xFF);  // Set low byte of divisor
+    outb(counter, divisor >> 8);    // Set high byte of divisor
 }

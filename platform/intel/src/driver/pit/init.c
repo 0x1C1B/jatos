@@ -23,17 +23,22 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/pit/pit.h>
 
-void cpu_init() {
+volatile size_t pit_ticks;
+static void pit_handler(processor_state_t *state);
 
-    gdt_init(); // Setup memory segmentation
+void pit_init() {
 
-    int_disable();	// Disable interrupts temporary
+    // PIT counter 0 should fire 19 times per second instead of hardware's default 18.222
+    pit_phase(PIT_COUNTER_0_REG, PIT_IRQ_SEC_HIT);
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+    pit_ticks = 0; // Reset ticks counter
+    
+    isr_install_listener(PROGRAMMABLE_INTERRUPT_TIMER_INTERRUPT, pit_handler);
+}
 
-    int_enable();	// Enable interrupts again
+static void pit_handler(processor_state_t *state)
+{
+    ++pit_ticks;
 }

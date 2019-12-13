@@ -26,12 +26,11 @@
 #ifndef _ARCH_X86_CPU_H
 #define _ARCH_X86_CPU_H
 
+#include <cpu/interrupt.h>
+
 #include <cpu/gdt/gdt.h>
 #include <cpu/idt/idt.h>
-
-#include <cpu/interrupt/isr.h>
-#include <cpu/interrupt/exc/exc.h>
-#include <cpu/interrupt/irq/irq.h>
+#include <cpu/isr/isr.h>
 
 void cpu_init();
 

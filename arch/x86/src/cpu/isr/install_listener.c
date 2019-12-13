@@ -23,17 +23,16 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <cpu/isr/isr.h>
 
-void cpu_init() {
+extern isr_listener_t listeners[ISR_LISTENER_LIMIT];
 
-    gdt_init(); // Setup memory segmentation
+uint32_t isr_install_listener(isr_selector_t selector, isr_listener_t listener) {
 
-    int_disable();	// Disable interrupts temporary
+    if(ISR_LISTENER_LIMIT <= selector) {
+        return -1;
+    }
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
-
-    int_enable();	// Enable interrupts again
+    listeners[selector] = listener;
+    return 0;
 }

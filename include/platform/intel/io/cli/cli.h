@@ -27,7 +27,7 @@
 #define _PLATFORM_IO_CLI_H
 
 #include <driver/video/vga/tm/vga_tm.h>
-#include <driver/keyboard/keyboard.h>
+#include <driver/ps2/keyboard/keyboard.h>
 
 #include <ctype.h>
 

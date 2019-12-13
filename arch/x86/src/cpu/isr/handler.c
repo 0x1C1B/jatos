@@ -23,17 +23,26 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <cpu/isr/isr.h>
 
-void cpu_init() {
+extern isr_listener_t listeners[ISR_LISTENER_LIMIT];
 
-    gdt_init(); // Setup memory segmentation
+// Second stage ISR interrupt handler responsible for notifying observers about occurred interrupts
+void isr_handler(processor_state_t *state) {
 
-    int_disable();	// Disable interrupts temporary
+	// Call registered listener for actual handling implementation
+    if(ISR_LISTENER_LIMIT > state->interrupt_code && 0x00 != listeners[state->interrupt_code]) {
+		
+		isr_listener_t listener = listeners[state->interrupt_code];
+		listener(state);
+	}
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+	// If IRQ8 (ISR40) - IRQ15 (ISR47) are invoked we nned to send an EOI to slave controller
+	if(40 <= state->interrupt_code) {
 
-    int_enable();	// Enable interrupts again
+        outb(PIC_SLAVE_COMMAND_REG, PIC_EOI);
+    }
+
+    // In either case we need to send an EOI to the master interrupt controller
+    outb(PIC_MASTER_COMMAND_REG, PIC_EOI);
 }

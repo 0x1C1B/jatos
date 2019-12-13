@@ -23,17 +23,12 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/ps2/keyboard/keyboard.h>
 
-void cpu_init() {
+uint8_t keyboard_getc() {
 
-    gdt_init(); // Setup memory segmentation
-
-    int_disable();	// Disable interrupts temporary
-
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
-
-    int_enable();	// Enable interrupts again
+    uint8_t key = 0x00;
+    keyboard_dequeue(&key);
+    
+    return key;
 }

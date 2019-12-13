@@ -23,17 +23,12 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/pit/pit.h>
 
-void cpu_init() {
+extern volatile size_t pit_ticks;
 
-    gdt_init(); // Setup memory segmentation
-
-    int_disable();	// Disable interrupts temporary
-
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
-
-    int_enable();	// Enable interrupts again
+void pit_wait(size_t ticks)
+{
+    size_t eticks = pit_ticks + ticks;
+    while(pit_ticks < eticks);
 }

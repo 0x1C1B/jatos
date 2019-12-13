@@ -23,17 +23,31 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/ps2/keyboard/keyboard.h>
 
-void cpu_init() {
+key_queue_t queue;
+keyboard_layout_t *layout;
 
-    gdt_init(); // Setup memory segmentation
+static void keyboard_handler(processor_state_t *state);
 
-    int_disable();	// Disable interrupts temporary
+void keyboard_init() {
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+    // Initialize key circular buffer
+    queue.write_ptr = queue.buffer;
+    queue.read_ptr = queue.buffer;
+    queue.available = 0;
 
-    int_enable();	// Enable interrupts again
+    layout = &layout_us;    // Set a default keyboard layout
+
+    isr_install_listener(KEYBOARD_INTERRUPT, keyboard_handler);
+}
+
+static void keyboard_handler(processor_state_t *state) {
+
+    uint8_t key = keyboard_decode();
+
+    if(0x00 != key) {
+
+        keyboard_enqueue(key);
+    }
 }

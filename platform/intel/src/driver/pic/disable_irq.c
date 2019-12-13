@@ -23,17 +23,28 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/pic/pic.h>
 
-void cpu_init() {
+void pic_disable_irq(uint8_t irq) {
 
-    gdt_init(); // Setup memory segmentation
+    uint16_t port;
+    uint8_t value;
+ 
+    if(8 > irq) {
 
-    int_disable();	// Disable interrupts temporary
+        port = PIC_MASTER_DATA_REG;
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+    } else {
 
-    int_enable();	// Enable interrupts again
+        port = PIC_SLAVE_DATA_REG;
+        irq -= 8;
+    }
+
+    /*
+        Disable IRQ by setting IRQ bit inside of Interrupt Mask Register (IMR). PIC
+        ignores the request and continues normal operation if the IRQ bit is set.
+    */
+
+    value = inb(port) | (1 << irq);
+    outb(port, value);   
 }

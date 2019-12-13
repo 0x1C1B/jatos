@@ -23,17 +23,71 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/ps2/keyboard/keyboard.h>
 
-void cpu_init() {
+static bool shifted;
+static bool pressed;
 
-    gdt_init(); // Setup memory segmentation
+extern keyboard_layout_t *layout;
 
-    int_disable();	// Disable interrupts temporary
+static uint8_t keyboard_scancode();
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+uint8_t keyboard_decode() {
 
-    int_enable();	// Enable interrupts again
+    uint8_t key;
+	uint8_t scancode = keyboard_scancode();
+	
+	if(shifted) {
+
+		key = layout->shifted[scancode];
+
+	} else {
+
+		key = layout->keymap[scancode];
+	}
+	
+	if(!(KEY_LSHIFT == scancode || KEY_RSHIFT == scancode) && pressed) {
+
+		return key;
+
+	} else {
+
+		return 0;
+	}
+}
+
+static uint8_t keyboard_scancode() {
+
+	uint8_t scancode;
+	
+    // Loop is necessary for shift processing
+	while(1) {
+
+		scancode = inb(KEYBOARD_DATA_REG); // Read scancode from memory
+		
+        // Check if key released
+		if(0x80 & scancode) {
+
+			pressed = false;
+			scancode &= 0x7F; // Compare only bit 7
+			
+			if(KEY_LSHIFT == scancode || KEY_RSHIFT == scancode) {
+				shifted = false;
+			}
+		}
+		else { // Key pressed
+
+			pressed = true;
+			
+			if(KEY_LSHIFT == scancode || KEY_RSHIFT == scancode) {
+
+				shifted = true;
+				continue;
+			}
+		}
+		
+		break;
+	}
+	
+	return scancode;
 }

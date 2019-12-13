@@ -23,17 +23,31 @@
  *
  */
 
-#include <cpu/cpu.h>
+#include <driver/pic/pic.h>
 
-void cpu_init() {
+void pic_remap_irq(uint8_t offset, uint8_t limit) {
 
-    gdt_init(); // Setup memory segmentation
+    // Save PIC masks
+    uint8_t mask1 = inb(PIC_MASTER_DATA_REG);
+    uint8_t mask2 = inb(PIC_SLAVE_DATA_REG);
 
-    int_disable();	// Disable interrupts temporary
+    // ICW1: Initialize remapping for maser + slave by sending ICW1 (Initialisation Command Word)
+	outb(PIC_MASTER_COMMAND_REG, 0x11);
+    outb(PIC_SLAVE_COMMAND_REG, 0x11);
 
-    // Support interrupts
-    isr_init(); // Allow listener based interrupt handling
-    idt_init(); // Install interrupt handling
+	// ICW2: Set interrupts to remap
+    outb(PIC_MASTER_DATA_REG, offset);  // Master PIC vector offset
+    outb(PIC_SLAVE_DATA_REG, limit);    // Slave PIC vector offset
 
-    int_enable();	// Enable interrupts again
+	// ICW3: Choose master and slave
+    outb(PIC_MASTER_DATA_REG, 0x04);	// Set PIC1 as master
+    outb(PIC_SLAVE_DATA_REG, 0x02);		// Set PIC2 as slave
+
+	// ICW4: Set both 8259 PIC chips to x86 mode
+    outb(PIC_MASTER_DATA_REG, 0x01);	// Set mode for PIC1
+    outb(PIC_SLAVE_DATA_REG, 0x01);		// Set mode for PIC2
+
+	// Restore saved masks
+    outb(PIC_MASTER_DATA_REG, mask1);
+    outb(PIC_SLAVE_DATA_REG, mask2);
 }

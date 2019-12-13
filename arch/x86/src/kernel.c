@@ -26,7 +26,7 @@
 #include <boot/multiboot.h>
 #include <cpu/cpu.h>
 
-#include <driver/timer/pit.h>
+#include <driver/pit/pit.h>
 #include <io/cli/cli.h>
 
 #include <stdlib.h>
@@ -37,8 +37,10 @@ void kmain(multiboot_header_t *mboot_ptr) {
 
     cpu_init(); // Initialize CPU (GDT + IDT + Interrupts)
 
-    // Install a default interrupt handler
-    isr_install_default_listener(&kinterrupt_handler);
+    // Install a default interrupt handler for exceptions (INT 0-31)
+    for(uint8_t interrupt = 0; interrupt < 32; ++interrupt) {
+        isr_install_listener(interrupt, kinterrupt_handler);
+    }
 
     pit_init(); // Initialize programmable interrupt timer
     cli_init(); // Enable command line interface (Keyboard + VGA textmode)
@@ -84,26 +86,6 @@ void kinterrupt_handler(processor_state_t *state) {
         "Intel reserved exception"
     };
 
-    static const char *irq_messages[] = {
-
-        "System timer",
-        "Keyboard controller",
-        "Cascade signal",
-        "Serial port controller 1",
-        "Serial port controller 2",
-        "Sound card",
-        "Floppy disk controller",
-        "Parallel port 1",
-        "Real time clock",
-        "Advanced Configuration and Power Interface",
-        "Peripheral",
-        "Peripheral",
-        "Mouse",
-        "CPU co-processor",
-        "Primary ATA channel",
-        "Secondary ATA channel"
-    };
-
     // Handle exceptions only
     if(32 > state->interrupt_code) {
 
@@ -119,18 +101,5 @@ void kinterrupt_handler(processor_state_t *state) {
 
         cli_color(CLI_WHITE, CLI_BLACK);
 
-    } else if(32 <= state->interrupt_code && 47 >= state->interrupt_code) { // Handle IRQs
-
-        char int_code[4];
-		
-        cli_color(CLI_GREEN, CLI_BLACK);
-
-        cli_print("Interrupt (Hardware) ");
-        cli_print(itoa(state->interrupt_code, int_code, 10));
-        cli_print(": ");
-        cli_print(irq_messages[state->interrupt_code - 32]);
-        cli_putc('\n');
-
-        cli_color(CLI_WHITE, CLI_BLACK);
     }
 }
