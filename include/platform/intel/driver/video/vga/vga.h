@@ -26,6 +26,7 @@
 #ifndef _PLATFORM_DRIVER_VGA_H
 #define _PLATFORM_DRIVER_VGA_H
 
+#include <io/ports.h>
 #include <stdint.h>
 
 // Memory base addresses for different VGA video modes
@@ -88,9 +89,16 @@
 #define VGA_SEQ_MEMORY_MODE_REG     (0x04)
 
 // Attribute Controller (AC)
-#define VGA_AC_ADDRESS_PORT      (0x3C0)
-#define VGA_AC_WRITE_PORT        (0x3C0)
-#define VGA_AC_READ_PORT         (0x3C1)
+#define VGA_AC_ADDRESS_PORT     (0x3C0)
+#define VGA_AC_WRITE_PORT       (0x3C0)
+#define VGA_AC_READ_PORT        (0x3C1)
+#define VGA_AC_RESET_PORT       (0x3DA)
+
+// Misc Controller (MISC)
+#define VGA_MISC_WRITE_PORT     (0x3C2)
+#define VGA_MISC_READ_PORT      (0x3CC)
+
+#define VGA_VIDEO_MODE_LIMIT    (20)    // Standart VGA supports 20 potential video modes
 
 // List of supported VGA video modes
 typedef enum {
@@ -100,8 +108,7 @@ typedef enum {
 }
 vga_mode_t;
 
-// VGA register dumps for various video modes
-extern const uint8_t VGA_80X25X16_TEXT_MODE[];
-extern const uint8_t VGA_320X200X256_GFX_MODE[];
+// Change the VGA video mode
+int32_t vga_mode(vga_mode_t mode);
 
 #endif // _PLATFORM_DRIVER_VGA_H

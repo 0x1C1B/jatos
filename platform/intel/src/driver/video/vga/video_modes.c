@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/vga.h>
 
-const uint8_t VGA_80X25X16_TEXT_MODE[] = {
+static uint8_t VGA_80X25X16_TEXT_MODE[] = {
 
     // MISC
 	0x67,
@@ -45,7 +45,7 @@ const uint8_t VGA_80X25X16_TEXT_MODE[] = {
 	0x0C, 0x00, 0x0F, 0x08, 0x00
 };
 
-const uint8_t VGA_320X200X256_GFX_MODE[] = {
+static uint8_t VGA_320X200X256_GFX_MODE[] = {
 
     // MISC
 	0x63,
@@ -63,4 +63,29 @@ const uint8_t VGA_320X200X256_GFX_MODE[] = {
 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
 	0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
 	0x41, 0x00, 0x0F, 0x00,	0x00
+};
+
+// VGA video modes table
+uint8_t *modes[VGA_VIDEO_MODE_LIMIT] = {
+
+    0x00,   // Mode 0 is unsupported
+    0x00,   // Mode 1 is unsupported
+    0x00,   // Mode 2 is unsupported
+    VGA_80X25X16_TEXT_MODE,
+    0x00,   // Mode 4 is unsupported
+    0x00,   // Mode 5 is unsupported
+    0x00,   // Mode 6 is unsupported
+    0x00,   // Mode 7 is unsupported
+    0x00,   // Mode 8 is unsupported
+    0x00,   // Mode 9 is unsupported
+    0x00,   // Mode 10 is unsupported
+    0x00,   // Mode 11 is unsupported
+    0x00,   // Mode 12 is unsupported
+    0x00,   // Mode 13 is unsupported
+    0x00,   // Mode 14 is unsupported
+    0x00,   // Mode 15 is unsupported
+    0x00,   // Mode 16 is unsupported
+    0x00,   // Mode 17 is unsupported
+    0x00,   // Mode 18 is unsupported
+    VGA_320X200X256_GFX_MODE
 };
