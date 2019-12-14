@@ -4,6 +4,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+  - [Background Story](#background-story)
 - [Project](#project)
   - [Structure](#structure)
 - [License](#license)
@@ -15,6 +16,13 @@ The project, which was mainly implemented in `C` and `Assembler`, originally aim
 processes of an operating system as well as the functionality of the hardware.
 In the course of time, however, the project increasingly developed into a personal undertaking with the ambition of creating
 a lightweight *"toy"* operating system. So feel free to contribute or writing extensions in any kind.
+
+### Background Story
+What is it, what isn't? A good question especially on such a complex topic. What drives me? Hmm, the interest in hardware near development, a hint of [naivety](https://wiki.osdev.org/Beginner_Mistakes)?! Everyone agrees on one thing: A mammoth project for a student of Applied Computer Science in the third semester. Now I see this project less as a project with a fixed goal and more as a way towards a deeper understanding of kernel, bootloader and co.
+
+Personally, I am someone who prefers to try it out for himself and apply the theory he has learned. Well, admittedly not quite as easy for such a complex topic as computer engineering. However I developed promptly, admittedly not exactly according to textbook, but for me in every perspective very rich in experience.
+
+So this project should be seen as what it actually is: *The diary of a student on his way to a better understanding of the world of operating systems.*
 
 ## Project
 Even if only the `x86 (i386)` architecture is supported so far and this will not change in the foreseeable future,
