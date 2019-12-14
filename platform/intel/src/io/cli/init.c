@@ -38,8 +38,6 @@ void cli_init() {
     cli.fg = CLI_WHITE;
     cli.bg = CLI_BLACK;
 
-    vga_tm_clear();
-    vga_tm_enable_cursor(0x00, 0x0F);
-
+    vga_tm_init();
     keyboard_init();
 }
