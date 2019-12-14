@@ -26,14 +26,16 @@
 #ifndef _PLATFORM_DRIVER_VGA_H
 #define _PLATFORM_DRIVER_VGA_H
 
+#include <stdint.h>
+
 // Memory base addresses for different VGA video modes
 #define VGA_GFX_VIDEO_MEMORY            (0xA0000)   // Graphics mode
 #define VGA_MONOCHROME_VIDEO_MEMORY     (0xB0000)   // Monochrome (uncolored) text mode
 #define VGA_TM_VIDEO_MEMORY             (0xB8000)   // Text mode
 
 // CRT Controller (CRTC) ports
-#define VGA_CRTC_ADDRESS_REG     (0x3D4)
-#define VGA_CRTC_DATA_REG        (0x3D5)
+#define VGA_CRTC_ADDRESS_PORT   (0x3D4)
+#define VGA_CRTC_DATA_PORT      (0x3D5)
 
 #define VGA_HORIZONTAL_TOTAL_REG            (0x00)
 #define VGA_END_HORIZONTAL_DISPLAY_REG      (0x01)
@@ -62,8 +64,8 @@
 #define VGA_LINE_COMPARE_REG                (0x18)
 
 // Graphics Controller (GC) ports
-#define VGA_GC_ADDRESS_REG     (0x3CE)
-#define VGA_GC_DATA_REG        (0x3CF)
+#define VGA_GC_ADDRESS_PORT     (0x3CE)
+#define VGA_GC_DATA_PORT        (0x3CF)
 
 #define VGA_SET_RESET_REG               (0x00)
 #define VGA_ENABLE_SET_RESET_REG        (0x01)
@@ -76,13 +78,30 @@
 #define VGA_BITMASK_REG                 (0x08)
 
 // Sequencer (SEQ) ports
-#define VGA_SEQ_ADDRESS_REG     (0x3C4)
-#define VGA_SEQ_DATA_REG        (0x3C5)
+#define VGA_SEQ_ADDRESS_PORT     (0x3C4)
+#define VGA_SEQ_DATA_PORT        (0x3C5)
 
 #define VGA_RESET_REG               (0x00)
 #define VGA_CLOCKING_MODE_REG       (0x01)
 #define VGA_MAP_MASK_REG            (0x02)
 #define VGA_CHARACTER_MAP_REG       (0x03)
 #define VGA_SEQ_MEMORY_MODE_REG     (0x04)
+
+// Attribute Controller (AC)
+#define VGA_AC_ADDRESS_PORT      (0x3C0)
+#define VGA_AC_WRITE_PORT        (0x3C0)
+#define VGA_AC_READ_PORT         (0x3C1)
+
+// List of supported VGA video modes
+typedef enum {
+
+    VGA_80X25X16_TEXT = 0x03,
+    VGA_320X200X256_GFX = 0x13
+}
+vga_mode_t;
+
+// VGA register dumps for various video modes
+extern const uint8_t VGA_80X25X16_TEXT_MODE[];
+extern const uint8_t VGA_320X200X256_GFX_MODE[];
 
 #endif // _PLATFORM_DRIVER_VGA_H

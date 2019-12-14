@@ -27,9 +27,9 @@
 
 void vga_tm_enable_cursor(uint8_t start, uint8_t end)
 {
-	outb(VGA_CRTC_ADDRESS_REG, VGA_CURSOR_START_REG);
-	outb(VGA_CRTC_DATA_REG, (inb(VGA_CRTC_DATA_REG) & 0xC0) | start);
+	outb(VGA_CRTC_ADDRESS_PORT, VGA_CURSOR_START_REG);
+	outb(VGA_CRTC_DATA_PORT, (inb(VGA_CRTC_DATA_PORT) & 0xC0) | start);
  
-	outb(VGA_CRTC_ADDRESS_REG, VGA_CURSOR_END_REG);
-	outb(VGA_CRTC_DATA_REG, (inb(VGA_CRTC_DATA_REG) & 0xE0) | end);
+	outb(VGA_CRTC_ADDRESS_PORT, VGA_CURSOR_END_REG);
+	outb(VGA_CRTC_DATA_PORT, (inb(VGA_CRTC_DATA_PORT) & 0xE0) | end);
 }

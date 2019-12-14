@@ -55,9 +55,6 @@
 #define VGA_TM_LIGHT_BROWN		(0x0E)
 #define VGA_TM_WHITE			(0x0F)
 
-#define VGA_TM_SUCCESS  (0x00)
-#define VGA_TM_FAILURE  (-0x01)
-
 int32_t vga_tm_move(size_t cell, uint16_t *buf, size_t cells);
 int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg);
 void vga_tm_clear();

@@ -30,11 +30,11 @@ static uint16_t *video_memory = (uint16_t *) VGA_TM_VIDEO_MEMORY;
 int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg) {
 
     if(VGA_TM_CELLS <= cell) {
-		return VGA_TM_FAILURE;
+		return -1;
 	}
 
     uint8_t attribute = ((bg & 0x0F) << 4) | (fg & 0x0F);
     video_memory[cell] = c | (attribute << 8);
 
-    return VGA_TM_SUCCESS;
+    return 0;
 }

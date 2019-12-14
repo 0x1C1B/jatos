@@ -30,10 +30,10 @@ static uint16_t *video_memory = (uint16_t *) VGA_TM_VIDEO_MEMORY;
 int32_t vga_tm_move(size_t cell, uint16_t *buf, size_t cells) {
 
     if(VGA_TM_CELLS <= (cell + cells)) {
-		return VGA_TM_FAILURE;
+		return -1;
 	}
 
     memcpy(video_memory + cell, buf, cells * 2);
 
-    return VGA_TM_SUCCESS;
+    return 0;
 }
