@@ -32,7 +32,11 @@
 #include <string.h>
 #include <stdint.h>
 
-// Screen dimensions divided into cells organized in rows and columns
+/*
+    Screen is divided into separate character cells that are organized in
+    in rows and columns.
+*/
+
 #define VGA_TM_ROWS     (25)
 #define VGA_TM_COLUMNS  (80)
 #define VGA_TM_CELLS    (VGA_TM_ROWS * VGA_TM_COLUMNS)
@@ -57,12 +61,14 @@
 
 void vga_tm_init();
 
+// Modifying screen's character cells
 int32_t vga_tm_move(size_t cell, uint16_t *buf, size_t cells);
 int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg);
 void vga_tm_clear();
 
 int32_t vga_tm_scroll(size_t rows);
 
+// Text mode cursor functionality
 void vga_tm_disable_cursor();
 void vga_tm_enable_cursor(uint8_t start, uint8_t end);
 int32_t vga_tm_cursor(size_t cell);

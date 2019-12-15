@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-extern uint16_t *video_memory;
+extern uint16_t *const vga_tm_vram;
 
 int32_t vga_tm_scroll(size_t rows) {
 
@@ -37,10 +37,10 @@ int32_t vga_tm_scroll(size_t rows) {
 	uint16_t value = 0x20 | (attribute << 8);
 
     size_t cells = (VGA_TM_ROWS - rows) * VGA_TM_COLUMNS;
-    void *offset = video_memory + rows * VGA_TM_COLUMNS;
+    void *offset = vga_tm_vram + rows * VGA_TM_COLUMNS;
 
-    memcpy(video_memory, offset, cells * 2);
-    memsetw(video_memory + cells, value, rows * VGA_TM_COLUMNS);
+    memcpy(vga_tm_vram, offset, cells * 2);
+    memsetw(vga_tm_vram + cells, value, rows * VGA_TM_COLUMNS);
 
     return 0;
 }

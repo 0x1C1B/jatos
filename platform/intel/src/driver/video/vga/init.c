@@ -25,21 +25,21 @@
 
 #include <driver/video/vga/vga.h>
 
-extern uint8_t *modes[VGA_VIDEO_MODE_LIMIT];
+extern uint8_t *const vga_modes[VGA_VIDEO_MODES];
 
-static void vga_mode_init(uint8_t *registers);
+static void vga_install(uint8_t *registers);
 
-int32_t vga_mode(vga_mode_t mode) {
+int32_t vga_init(vga_mode_t mode) {
 
-    if(VGA_VIDEO_MODE_LIMIT <= mode || 0x00 == modes[mode]) {
+    if(VGA_VIDEO_MODES <= mode || 0x00 == vga_modes[mode]) {
         return -1;
     }
 
-    vga_mode_init(modes[mode]);
+    vga_install(vga_modes[mode]);
     return 0;
 }
 
-static void vga_mode_init(uint8_t *registers) {
+static void vga_install(uint8_t *registers) {
 
     // Initialize MISC controller
     outb(VGA_MISC_WRITE_PORT, *(registers++));

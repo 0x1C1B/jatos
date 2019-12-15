@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-extern uint16_t *video_memory;
+extern uint16_t *const vga_tm_vram;
 
 int32_t vga_tm_move(size_t cell, uint16_t *buf, size_t cells) {
 
@@ -33,7 +33,7 @@ int32_t vga_tm_move(size_t cell, uint16_t *buf, size_t cells) {
 		return -1;
 	}
 
-    memcpy(video_memory + cell, buf, cells * 2);
+    memcpy(vga_tm_vram + cell, buf, cells * 2);
 
     return 0;
 }

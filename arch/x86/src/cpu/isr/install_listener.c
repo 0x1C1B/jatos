@@ -25,11 +25,11 @@
 
 #include <cpu/isr/isr.h>
 
-extern isr_listener_t listeners[ISR_LISTENER_LIMIT];
+extern isr_listener_t listeners[ISR_LISTENERS];
 
 uint32_t isr_install_listener(isr_selector_t selector, isr_listener_t listener) {
 
-    if(ISR_LISTENER_LIMIT <= selector) {
+    if(ISR_LISTENERS <= selector) {
         return -1;
     }
 

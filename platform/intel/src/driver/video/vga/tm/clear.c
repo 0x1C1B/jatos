@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-extern uint16_t *video_memory;
+extern uint16_t *const vga_tm_vram;
 
 void vga_tm_clear() {
 
@@ -34,6 +34,6 @@ void vga_tm_clear() {
 
     for(int row = 0; row < VGA_TM_ROWS; ++row) {
 
-        memsetw(video_memory + (row * VGA_TM_COLUMNS), value, VGA_TM_COLUMNS);
+        memsetw(vga_tm_vram + (row * VGA_TM_COLUMNS), value, VGA_TM_COLUMNS);
     }
 }

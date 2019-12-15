@@ -28,23 +28,34 @@
 
 #include <driver/video/vga/vga.h>
 
-// Screen dimensions divided into pixels organized in a coordinate system
+#include <string.h>
+#include <stdint.h>
+
+/*
+    Screen is divided into separate colorful pixels that are organized in a
+    coordinate system.
+*/
+
 #define VGA_GFX_HEIGHT  (200)
 #define VGA_GFX_WIDTH   (320)
+#define VGA_GFX_PIXELS  (VGA_GFX_HEIGHT * VGA_GFX_WIDTH)
 
-// Important colors codes of VGA 256-Color mode
-#define VGA_GFX_BLACK       (0x00)
-#define VGA_GFX_WHITE       (0x0F)
-#define VGA_GFX_RED         (0x04)
-#define VGA_GFX_BLUE        (0x01)
-#define VGA_GFX_GREEN       (0x02)
-#define VGA_GFX_YELLOW      (0x0E)
-#define VGA_GFX_PINK        (0x0D)
-#define VGA_GFX_ORANGE      (0x2A)
-#define VGA_GFX_PURPLE      (0x22)
-#define VGA_GFX_BROWN       (0x06)
-#define VGA_GX_LIGHT_GRAY   (0x07)
-#define VGA_GX_DARK_GRAY    (0x08)
+// The first 16 VGA colors of VGA 256-Color palette
+#define VGA_GFX_BLACK           (0x00)
+#define VGA_GFX_BLUE            (0x01)
+#define VGA_GFX_GREEN           (0x02)
+#define VGA_GFX_CYAN            (0x03)
+#define VGA_GFX_RED             (0x04)
+#define VGA_GFX_MAGENTA         (0x05)
+#define VGA_GFX_BROWN           (0x06)
+#define VGA_GFX_LIGHT_GRAY      (0x07)
+#define VGA_GFX_DARK_GRAY       (0x08)
+#define VGA_GFX_LIGHT_BLUE      (0x09)
+#define VGA_GFX_LIGHT_GREEN     (0x0A)
+#define VGA_GFX_LIGHT_CYA       (0x0B)
+#define VGA_GFX_LIGHT_MAGENTA   (0x0C)
+#define VGA_GFX_YELLOW          (0x0E)
+#define VGA_GFX_WHITE           (0x0F)
 
 void vga_gfx_init();
 

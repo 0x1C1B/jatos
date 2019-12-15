@@ -66,7 +66,7 @@ static uint8_t VGA_320X200X256_GFX_MODE[] = {
 };
 
 // VGA video modes table
-uint8_t *modes[VGA_VIDEO_MODE_LIMIT] = {
+uint8_t *const vga_modes[VGA_VIDEO_MODES] = {
 
     0x00,   // Mode 0 is unsupported
     0x00,   // Mode 1 is unsupported

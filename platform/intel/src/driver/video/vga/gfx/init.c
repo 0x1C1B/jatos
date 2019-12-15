@@ -25,11 +25,11 @@
 
 #include <driver/video/vga/gfx/vga_gfx.h>
 
-uint8_t *video_ram = (uint8_t *) VGA_GFX_VIDEO_MEMORY;
+uint8_t *const vga_gfx_vram = (uint8_t *const) VGA_GFX_VIDEO_MEMORY;
 
 void vga_gfx_init() {
 
-    vga_mode(VGA_320X200X256_GFX);    // Initialize VGA video text mode
-
-    vga_gfx_fill(VGA_GFX_BLACK); // Clear current screen
+    vga_init(VGA_320X200X256_GFX);  // Initialize VGA video text mode
+    
+    vga_gfx_fill(VGA_GFX_BLACK);    // Clear current screen
 }

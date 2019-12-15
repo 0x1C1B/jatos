@@ -25,7 +25,7 @@
 
 #include <cpu/isr/isr.h>
 
-isr_listener_t listeners[ISR_LISTENER_LIMIT];
+isr_listener_t listeners[ISR_LISTENERS];
 
 static void isr_irq_init();
 static void isr_exc_init();

@@ -36,7 +36,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#define ISR_LISTENER_LIMIT  (48)    // Maximum amount of listeners
+#define ISR_LISTENERS   (48)    // Maximum amount of listeners
 
 /*
     Current processor state before occurred interrupt. Required for restoring

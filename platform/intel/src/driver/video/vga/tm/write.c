@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-extern uint16_t *video_memory;
+extern uint16_t *const vga_tm_vram;
 
 int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg) {
 
@@ -34,7 +34,7 @@ int32_t vga_tm_write(size_t cell, uint8_t c, uint8_t fg, uint8_t bg) {
 	}
 
     uint8_t attribute = ((bg & 0x0F) << 4) | (fg & 0x0F);
-    video_memory[cell] = c | (attribute << 8);
+    vga_tm_vram[cell] = c | (attribute << 8);
 
     return 0;
 }

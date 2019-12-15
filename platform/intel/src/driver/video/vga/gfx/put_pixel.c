@@ -25,7 +25,7 @@
 
 #include <driver/video/vga/gfx/vga_gfx.h>
 
-extern uint8_t *video_ram;
+extern uint8_t *const vga_gfx_vram;
 
 int32_t vga_gfx_put_pixel(uint32_t x, uint32_t y, uint8_t color) {
 
@@ -33,7 +33,7 @@ int32_t vga_gfx_put_pixel(uint32_t x, uint32_t y, uint8_t color) {
 		return -1;
 	}
 
-    uint8_t *pixel = video_ram + (VGA_GFX_WIDTH * y + x);
+    uint8_t *pixel = vga_gfx_vram + (VGA_GFX_WIDTH * y + x);
     *pixel = color;
 
     return 0;

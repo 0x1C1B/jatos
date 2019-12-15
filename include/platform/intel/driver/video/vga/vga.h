@@ -98,7 +98,7 @@
 #define VGA_MISC_WRITE_PORT     (0x3C2)
 #define VGA_MISC_READ_PORT      (0x3CC)
 
-#define VGA_VIDEO_MODE_LIMIT    (20)    // Standart VGA supports 20 potential video modes
+#define VGA_VIDEO_MODES (20)    // Standart VGA supports 20 potential video modes
 
 // List of supported VGA video modes
 typedef enum {
@@ -109,6 +109,6 @@ typedef enum {
 vga_mode_t;
 
 // Change the VGA video mode
-int32_t vga_mode(vga_mode_t mode);
+int32_t vga_init(vga_mode_t mode);
 
 #endif // _PLATFORM_DRIVER_VGA_H

@@ -25,13 +25,13 @@
 
 #include <cpu/isr/isr.h>
 
-extern isr_listener_t listeners[ISR_LISTENER_LIMIT];
+extern isr_listener_t listeners[ISR_LISTENERS];
 
 // Second stage ISR interrupt handler responsible for notifying observers about occurred interrupts
 void isr_handler(processor_state_t *state) {
 
 	// Call registered listener for actual handling implementation
-    if(ISR_LISTENER_LIMIT > state->interrupt_code && 0x00 != listeners[state->interrupt_code]) {
+    if(ISR_LISTENERS > state->interrupt_code && 0x00 != listeners[state->interrupt_code]) {
 		
 		isr_listener_t listener = listeners[state->interrupt_code];
 		listener(state);

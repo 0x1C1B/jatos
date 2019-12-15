@@ -25,11 +25,11 @@
 
 #include <driver/video/vga/tm/vga_tm.h>
 
-uint16_t *video_memory = (uint16_t *) VGA_TM_VIDEO_MEMORY;
+uint16_t *const vga_tm_vram = (uint16_t *const) VGA_TM_VIDEO_MEMORY;
 
 void vga_tm_init() {
 
-    vga_mode(VGA_80X25X16_TEXT);    // Initialize VGA video text mode
+    vga_init(VGA_80X25X16_TEXT);    // Initialize VGA video text mode
 
     vga_tm_clear();                     // Clear current screen
     vga_tm_enable_cursor(0x00, 0x0F);   // Enable text mode cursor
