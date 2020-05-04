@@ -27,6 +27,7 @@
 #include <cpu/cpu.h>
 
 #include <driver/pit/pit.h>
+#include <driver/serial/serial.h>
 #include <io/cli/cli.h>
 
 #include <stdlib.h>
@@ -42,6 +43,7 @@ void kmain(multiboot_header_t *mboot_ptr) {
         isr_install_listener(interrupt, kinterrupt_handler);
     }
 
+    serial_init(SERIAL_COM1);   // Initialize serial interface
     pit_init(); // Initialize programmable interrupt timer
     cli_init(); // Enable command line interface (Keyboard + VGA textmode)
 
